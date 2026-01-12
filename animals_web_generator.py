@@ -17,21 +17,24 @@ def save_to_html(html_data,file_path):
     with open(file_path, "w") as handle:
         handle.write(html_data)
 
-animals_data = load_data('animals_data.json')
 
+animals_data = load_data('animals_data.json')
 animals_html_data = load_html_data('animals_template.html')
 
 output = ''  # define an empty string
+
 for animal in animals_data:
+    output += '<li class="cards__item">'
+    output += f'<div class="card__title">{animal['name']}</div>\n'
+    output += '<p class="card__text">'
+    output += f'<strong>Diet:</strong>{animal['characteristics']['diet']}<br/>\n'
+    output += f'<strong>Location:</strong>{animal['locations'][0]}<br/>\n'
+
     # append information to each string
     if 'type' in animal['characteristics']:
-        output += '<li class="cards__item">'
-        output += f"Name:{animal['name']}<br/>\nDiet:{animal['characteristics']['diet']}<br/>\nLocation:{animal['locations'][0]}<br/>\nType:{animal['characteristics']['type']}<br/>\n\n"
-        output += '</li>'
-    else:
-        output += '<li class="cards__item">'
-        output += f"Name:{animal['name']}<br/>\nDiet:{animal['characteristics']['diet']}<br/>\nLocation:{animal['locations'][0]}<br/>\n\n"
-        output += '</li>'
+        output += f'<strong>Type:</strong>{animal['characteristics']['type']} <br/>\n'
+    output += '</p>'
+    output += '</li>'
 new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', output)
 print(new_html_data)
 
