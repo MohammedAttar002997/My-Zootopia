@@ -39,13 +39,18 @@ def serialize_animal(animal_obj):
     return output_obj
 
 
-animals_data = load_data('animals_data.json')
-animals_html_data = load_html_data('animals_template.html')
+
+def main():
+    animals_data = load_data('animals_data.json')
+    animals_html_data = load_html_data('animals_template.html')
+
+    output = ''  # define an empty string
+    for animal in animals_data:
+        output += serialize_animal(animal)
+
+    new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', output)
+    save_to_html(new_html_data, 'animals.html')
 
 
-output = ''  # define an empty string
-for animal in animals_data:
-    output += serialize_animal(animal)
-
-new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', output)
-save_to_html(new_html_data, 'animals_template.html')
+if __name__ == '__main__':
+    main()
