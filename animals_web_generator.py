@@ -1,10 +1,5 @@
-import json
+from data_fetcher import fetch_data
 
-
-def load_data(file_path):
-  """ Loads a JSON file """
-  with open(file_path, "r") as handle:
-    return json.load(handle)
 
 
 def load_html_data(file_path):
@@ -41,15 +36,17 @@ def serialize_animal(animal_obj):
 
 
 def main():
-    animals_data = load_data('animals_data.json')
-    animals_html_data = load_html_data('animals_template.html')
+    fetch_data("Fox")
+    animals_data = fetch_data("Fox")
+    # animals_html_data = load_html_data('animals_template.html')
+    #
+    # output = ''  # define an empty string
+    # for animal in animals_data:
+    #     output += serialize_animal(animal)
+    #
+    # new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', output)
+    # save_to_html(new_html_data, 'animals.html')
 
-    output = ''  # define an empty string
-    for animal in animals_data:
-        output += serialize_animal(animal)
-
-    new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', output)
-    save_to_html(new_html_data, 'animals.html')
 
 
 if __name__ == '__main__':
