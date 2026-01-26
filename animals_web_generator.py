@@ -1,7 +1,6 @@
 from data_fetcher import fetch_data
 
 
-
 def load_html_data(file_path):
   """ Loads a JSON file """
   with open(file_path, "r") as handle:
@@ -35,17 +34,31 @@ def serialize_animal(animal_obj):
 
 
 
+
+def show_welcome_message():
+    print("Welcome to out simple app where you can learn more about animals")
+    user_input = input("What is your favorite animal? ")
+    return user_input
+
+
 def main():
-    fetch_data("Fox")
-    animals_data = fetch_data("Fox")
-    # animals_html_data = load_html_data('animals_template.html')
-    #
-    # output = ''  # define an empty string
-    # for animal in animals_data:
-    #     output += serialize_animal(animal)
-    #
-    # new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', output)
-    # save_to_html(new_html_data, 'animals.html')
+    animal_name= show_welcome_message()
+    animals_data = fetch_data(animal_name)
+    print(len(animals_data))
+    animals_html_data = load_html_data('animals_template.html')
+
+
+    if len(animals_data) != 0:
+        output = ''  # define an empty string
+        for animal in animals_data:
+            output += serialize_animal(animal)
+
+        new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', output)
+        save_to_html(new_html_data, 'animals.html')
+    else:
+        error_output = f'<h2>Sorry! The animal {animal_name} doesn\'t exist.</h2>'
+        new_html_data = animals_html_data.replace('__REPLACE_ANIMALS_INFO__', error_output)
+        save_to_html(new_html_data, 'animals.html')
 
 
 

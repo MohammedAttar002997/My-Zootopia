@@ -9,4 +9,4 @@ def fetch_data(name):
     final_url = ANIMALS_URL + name
     response = requests.get(final_url)
     res = response.json()
-    print(res)
+    return res
